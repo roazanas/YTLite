@@ -89,7 +89,7 @@ jobs:
 
       - name: Download and validate IPA
         run: |
-          wget "${{ inputs.ipa_url }}" --no-verbose -O ${{ github.workspace }}/youtube.ipa
+          wget --user="rznz" --password="$ {{ secrets.DOWNLOAD_PASSWORD }}" --auth-no-challenge "${{ inputs.ipa_url }}" -O ${{ github.workspace }}/youtube.ipa
 
           file_type=$(file --mime-type -b ${{ github.workspace }}/youtube.ipa)
 
