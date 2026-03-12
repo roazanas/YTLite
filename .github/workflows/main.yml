@@ -8,25 +8,25 @@ on:
         description: "Integrate YouPiP"
         type: boolean
         required: true
-        default: false
+        default: true
 
       enable_ytuhd:
         description: "Integrate YTUHD"
         type: boolean
         required: true
-        default: false
+        default: true
 
       enable_yq:
         description: "Integrate YouQuality"
         type: boolean
         required: true
-        default: false
+        default: true
 
       enable_ryd:
         description: "Integrate Return YouTube Dislikes"
         type: boolean
         required: true
-        default: false
+        default: true
 
       enable_demc:
         description: "Integrate DontEatMyContent"
@@ -48,7 +48,7 @@ on:
 
       display_name:
         description: "App Name (Optional)"
-        default: "YouTube"
+        default: "rznzTube"
         required: true
         type: string
 
@@ -88,8 +88,11 @@ jobs:
           exclude_inputs: bundle_id,display_name,enable_demc,enable_ryd,enable_youpip,enable_yq,enable_ytuhd,info_note,tweak_version
 
       - name: Download and validate IPA
+        env:
+          DL_USER: "rznz"
+          DL_PASS: "${{ secrets.DOWNLOAD_PASSWORD }}"
         run: |
-          wget --user="rznz" --password="$ {{ secrets.DOWNLOAD_PASSWORD }}" --auth-no-challenge "${{ inputs.ipa_url }}" -O ${{ github.workspace }}/youtube.ipa
+          curl -u "$DL_USER:$DL_PASS" -L "${{ inputs.ipa_url }}" -o ${{ github.workspace }}/youtube.ipa
 
           file_type=$(file --mime-type -b ${{ github.workspace }}/youtube.ipa)
 
